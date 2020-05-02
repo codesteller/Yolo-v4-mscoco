@@ -16,7 +16,8 @@ class DB:
         self.PARAMS = params
         self.PHASE_SUPPORTED = ["train2014", "val2014"]
         # None to stop vizualization, and int (n) value to do vizualization every n images
-        self.viz_interval = 1      
+        self.viz_interval = 10
+        self.viz_limit = 100      
         
     def create_records(self):
 
@@ -42,7 +43,7 @@ class DB:
             imgIds = coco.getImgIds()
         print(len(imgIds))
 
-        for idx, imgId in enumerate(imgIds[:10]):
+        for idx, imgId in enumerate(imgIds):
             annIds = coco.getAnnIds(imgIds=imgId)
             anobjs = coco.loadAnns(annIds)
             iobj = coco.loadImgs(imgId)[0]
@@ -88,9 +89,13 @@ class DB:
 
             if self.viz_interval:
                 if idx % self.viz_interval == 0:
+                    print("{}. Image Id: {}  - {} objects".format(idx, imgId, len(anobjs)))
                     self._visualize_annotation(temp_dict)
-
-            print("Image Id: {}  - {} objects".format(imgId, len(anobjs)))
+                elif idx > self.viz_limit:
+                    print("Turning OFF Vizualization as there are many images")
+                    self.viz_interval = False
+                else:
+                    continue
 
         return db_dict 
 
