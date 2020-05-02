@@ -5,7 +5,7 @@ def test_case_1():
     _params = DBParam()
     _db = DB(_params)
     print(_db.PARAMS.DATABASE)
-    _db.create_tfdata("a", "b")
+    _db.create_records()
 
 
 if __name__ == "__main__":
