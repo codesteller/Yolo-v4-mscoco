@@ -4,7 +4,7 @@ from utils.prepare_dataset import DB
 def test_case_1():
     _params = DBParam()
     _db = DB(_params)
-    print(_db.PARAMS.DATABASE)
+    print(_db.PARAMS.RECORDS_PATH)
     _db.create_records()
 
 
