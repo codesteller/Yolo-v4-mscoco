@@ -19,7 +19,7 @@ class DB:
         # None to stop vizualization, and int (n) value to do vizualization every n images
         self.viz_interval = None
         self.viz_limit = 100
-        self.num_samples = 1000
+        self.num_samples = None         # None to include all samples, else n samples will be taken in the dataset
 
     def create_records(self):
         """
@@ -53,8 +53,9 @@ class DB:
             tf_example = self._create_tfdata(imdb[idb])
             writer.write(tf_example.SerializeToString())
             isample += 1
-            if isample > self.num_samples:
-                break
+            if self.num_samples:
+                if isample > self.num_samples:
+                    break
         writer.close()
         print("Records file written to {}".format(self.PARAMS.RECORDS_PATH))
 
