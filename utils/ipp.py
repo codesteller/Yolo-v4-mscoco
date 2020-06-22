@@ -24,6 +24,6 @@ class IPP:
         im_info = dict()
         im_info["height"] = _features.feature['image/height']
 
-        print(im_info)
+        print(im_info["height"])
 
 
