@@ -131,3 +131,6 @@ dmypy.json
 # Project files
 .vscode
 .idea
+
+# Dataset
+coco_dataset_records

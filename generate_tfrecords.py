@@ -13,7 +13,7 @@ FLAGS = flags.FLAGS
 # If there is a conflict, we'll get an error at import time.
 flags.DEFINE_string('dataset_path', '~/raid_storage/05_Datasets/mscoco/coco_dataset',
                     'Enter the path to MSCOCO/PASCAL VOC Dataset.')
-flags.DEFINE_string('records_path', '~/datasets/mscoco/coco_dataset_records',
+flags.DEFINE_string('records_path', './coco_dataset_records',
                     'Enter the path where to save the records.')
 flags.DEFINE_string('dataset_type', 'mscoco',
                     'Enter the dataset nametype "mscoco" & "voc2012" is supported now.')
