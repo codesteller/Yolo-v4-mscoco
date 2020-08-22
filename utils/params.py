@@ -1,4 +1,5 @@
 import os
+import json
 
 
 class DBParam:
@@ -18,6 +19,8 @@ class DBParam:
         self.NUM_SHARDS = 10
         self.RECORDS_PATH = os.path.join(
             self.RECORDS_DIR, self.DATASET_PHASE + ".record")
+        self.PARAMS_PATH = os.path.join(
+            self.RECORDS_DIR, self.DATASET_PHASE + "_params.json")
         self.check_path()
 
         # MSCOCO Specific Flags
@@ -40,3 +43,20 @@ class TrainParam:
         self.train_records = train_records
         self.valid_records = valid_records
         self.test_records = test_records
+        # Core Network can be any one of -> "vgg19", "mobilenet", "resnet50"
+        self.core_network = "resnet50"
+        self.corenet_trainable = False
+        self.data_param = self._load_dataparam()
+
+    def _load_dataparam(self):
+        basename = os.path.basename(self.train_records)
+        dirname = os.path.dirname(self.train_records)
+        basename = basename.replace(".record", "_params.json")
+        param_filepath = os.path.join(dirname, basename)
+        try:
+            with open(param_filepath, "r") as fptr:
+                param_dict = json.load(fptr)
+        except Exception as e:
+            print("Error: {}".format(e))
+            exit(-1)
+        return param_dict

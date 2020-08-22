@@ -19,7 +19,7 @@ class DB:
         # None to stop vizualization, and int (n) value to do vizualization every n images
         self.viz_interval = None
         self.viz_limit = 100
-        self.num_samples = None         # None to include all samples, else n samples will be taken in the dataset
+        self.num_samples = None        # None to include all samples, else n samples will be taken in the dataset
 
     def create_records(self):
         """
@@ -57,7 +57,32 @@ class DB:
                 if isample > self.num_samples:
                     break
         writer.close()
+        self.num_samples = isample
         print("Records file written to {}".format(self.PARAMS.RECORDS_PATH))
+
+    def write_params(self):
+        """
+            Write the params in a file
+        """
+        param_dict = dict()
+        param_dict["DATASET_PATH"] = self.PARAMS.DATASET_PATH
+        param_dict["DATASET_TYPE"] = self.PARAMS.DATASET_TYPE
+        param_dict["DATASET_PHASE"] = self.PARAMS.DATASET_PHASE
+        param_dict["RECORDS_DIR"] = self.PARAMS.RECORDS_DIR
+        param_dict["IMAGE_TYPE"] = self.PARAMS.IMAGE_TYPE
+        param_dict["RECORDS_CREATE"] = self.PARAMS.RECORDS_CREATE
+        param_dict["IMAGE_HEIGHT"] = self.PARAMS.IMAGE_HEIGHT
+        param_dict["IMAGE_WIDTH"] = self.PARAMS.IMAGE_WIDTH
+        param_dict["NUM_SHARDS"] = self.PARAMS.NUM_SHARDS
+        param_dict["RECORDS_PATH"] = self.PARAMS.RECORDS_PATH 
+        param_dict["PARAMS_PATH"] = self.PARAMS.PARAMS_PATH 
+        param_dict["NUM_SAMPLES"] = self.num_samples
+        # MSCOCO Specific Flags  # ['person','dog','skateboard'] etc. None for all classes
+        param_dict["search_dataset_by_category"] = self.PARAMS.search_dataset_by_category
+
+        with open(self.PARAMS.PARAMS_PATH, "w") as fptr:
+            json.dump(param_dict, fptr)
+        print("PARAMS written to {} file".format(self.PARAMS.PARAMS_PATH))    
 
     def getdb_mscoco(self, data_dir='/mnt/raid_storage/05_Datasets/mscoco/coco_dataset', dataset_phase='train2014'):
         db_dict = dict()

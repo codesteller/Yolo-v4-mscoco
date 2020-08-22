@@ -134,3 +134,6 @@ dmypy.json
 
 # Dataset
 coco_dataset_records
+*.record
+*.param 
+

@@ -27,6 +27,10 @@ def main(argv):
                         valid_records=os.path.expanduser(FLAGS.valid_records),
                         test_records=os.path.expanduser(FLAGS.test_records))
 
+    # Add core network
+    # Core Network can be any one of -> "vgg19", "mobilenetv2", "resnet50"
+    params.core_network = "mobilenetv2"
+
     train_model = TrainModel(params)
     print(train_model.train_dataset)
     print(train_model.valid_dataset)

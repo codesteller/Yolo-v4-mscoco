@@ -21,7 +21,7 @@ flags.DEFINE_string('dataset_phase', 'train2014',
                     'enter dataset phase train, valid or test')
 
 
-def main(argv):
+def record_generator(argv):
 
     # flags.mark_flag_as_required('dataset_path')
     # flags.mark_flag_as_required('records_path')
@@ -38,12 +38,15 @@ def main(argv):
         print("Records file already exists. Do you want to create a new records (y/N): ")
         user_input = input()
         if user_input.lower() != "y":
-            print("Skipping records creation step. Record {} can be loaded".format(params.RECORDS_PATH)) 
+            print("Skipping records creation step. Record {} can be loaded".format(
+                params.RECORDS_PATH))
         else:
             _db.create_records()
+            _db.write_params()
     else:
         _db.create_records()
+        _db.write_params()
 
 
 if __name__ == '__main__':
-    app.run(main)
+    app.run(record_generator)
